@@ -17,6 +17,7 @@ import { agentKitPlugin } from "@elizaos/plugin-agentkit";
 import { PrimusAdapter } from "@elizaos/plugin-primus";
 import { lightningPlugin } from "@elizaos/plugin-lightning";
 import { elizaCodeinPlugin, onchainJson } from "@elizaos/plugin-iq6900";
+import { TruthSocialClientInterface } from "@elizaos/client-truthsocial";
 
 import {
     AgentRuntime,
@@ -735,6 +736,11 @@ export async function initializeClients(
         if (twitterClient) {
             clients.twitter = twitterClient;
         }
+    }
+
+    if (clientTypes.includes(Clients.TRUTHSOCIAL)) {
+        const truthSocialClient = await TruthSocialClientInterface.start(runtime);
+        if (truthSocialClient) clients.truthsocial = truthSocialClient;
     }
 
     if (clientTypes.includes(Clients.INSTAGRAM)) {
